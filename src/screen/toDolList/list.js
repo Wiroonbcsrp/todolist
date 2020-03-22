@@ -24,16 +24,9 @@ export default function () {
     };
 
     const onDelete = (index) => {
-        const newToDoList = toDoList.map((todo, i) => {
-            if (index === i) {
-                return ({
-                    ...todo, check: !todo.check
-                })
-            } else {
-                return (todo)
-            }
-        });
-        setToDoList(newToDoList)
+        const newToDoList = toDoList;
+        newToDoList.splice(index, 1);
+        setToDoList([...newToDoList])
     };
 
     const onCheck = (index) => {
