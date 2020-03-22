@@ -190,7 +190,7 @@ class App extends React.Component {
         return (
             <Router>
                 <Switch>
-                    <Route exact path="/login" component={Login}/>
+                    <Route exact path="/" component={Login}/>
                     <Route path="/to-do-list" component={ToDoList}/>
                 </Switch>
             </Router>
