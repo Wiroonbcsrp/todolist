@@ -16,8 +16,8 @@ export default function () {
             };
             const newToDoList = toDoList.concat(newToDo);
             setToDoList(newToDoList);
-            setInput('')
-            setInputDescription('')
+            setInput('');
+            setInputDescription('');
         } else {
             alert("Please input data.")
         }
