@@ -7,13 +7,27 @@ export default function () {
 
     const handleInput = e => setInput(e.target.value);
     const handleInputDescription = e => setInputDescription(e.target.value);
-    const onSubmit = () => {
-        if (input !== '' && inputDescription !== '') {
+
+    const onSubmit = async () => {
+        if (input !== '') {
             const newToDo = {
                 title: input,
                 description: inputDescription,
-                check: false
             };
+            await fetch("https://candidate.neversitup.com/todo", {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    title: input,
+                    description: inputDescription,
+                })
+            })
+                .then(resp => resp.json())
+                .then(data => {
+                });
             const newToDoList = toDoList.concat(newToDo);
             setToDoList(newToDoList);
             setInput('');
@@ -27,19 +41,6 @@ export default function () {
         const newToDoList = toDoList;
         newToDoList.splice(index, 1);
         setToDoList([...newToDoList])
-    };
-
-    const onCheck = (index) => {
-        const newToDoList = toDoList.map((todo, i) => {
-            if (index === i) {
-                return ({
-                    ...todo, check: !todo.check
-                })
-            } else {
-                return (todo)
-            }
-        });
-        setToDoList(newToDoList)
     };
 
     return (
@@ -68,7 +69,6 @@ export default function () {
                     <table className="table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th width="150" className="text-center">Check list</th>
                             <th width="500" className="text-center">Title</th>
                             <th width="500" className="text-center">Description</th>
                             <th width="200"/>
@@ -80,12 +80,6 @@ export default function () {
                                 return (
                                     <tbody key={i}>
                                     <tr>
-                                        <td>
-                                            <input type="checkbox"
-                                                   className="form-control"
-                                                   onChange={() => onCheck(i)}
-                                                   checked={todo.check}/>
-                                        </td>
                                         <td className="text-center">{todo.title}</td>
                                         <td className="text-center">{todo.description}</td>
                                         <td className="text-center">
