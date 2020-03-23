@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {Redirect} from 'react-router'
+import Button from "@material-ui/core/Button";
 
 export default function () {
     const [username, setUsername] = useState('');
@@ -25,7 +26,8 @@ export default function () {
                 .then(resp => resp.json())
                 .then(data => {
                     if (data.token) {
-                        setLoginComplete(true)
+                        setLoginComplete(true);
+                        localStorage.setItem('token', data.token);
                     }else {
                         alert("Invalid Username or Password")
                     }
@@ -66,9 +68,9 @@ export default function () {
                                    onChange={handleInputPassword}
                                    value={password}/>
                         </div>
-                        <button className="btn btn-outline-primary"
+                        <Button variant="contained" color="primary"
                                 onClick={onSubmit}>Login
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </div>

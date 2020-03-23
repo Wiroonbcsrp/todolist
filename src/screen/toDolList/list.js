@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import jwtDecode from "jwt-decode";
 
 export default function () {
     const [input, setInput] = useState('');
@@ -9,12 +10,14 @@ export default function () {
     const handleInputDescription = e => setInputDescription(e.target.value);
 
     const onSubmit = async () => {
+        let token = window.localStorage.getItem('token');
+        let token_decode = jwtDecode(token);
         if (input !== '') {
             const newToDo = {
                 title: input,
                 description: inputDescription,
             };
-            await fetch("https://candidate.neversitup.com/todo", {
+            await fetch("https://candidate.neversitup.com/todo/todos/"+{token_decode}, {
                 method: "POST",
                 headers: {
                     Accept: "application/json",
